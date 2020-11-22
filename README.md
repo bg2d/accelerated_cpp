@@ -1,1 +1,1 @@
-# accelereated_cpp
+# accelerated_cpp
