@@ -21,7 +21,6 @@ using std::streamsize;
 using std::string;
 using std::vector;
 using std::list;
-using std::iterator;
 
 int main() {
     list<Student_info> students;
