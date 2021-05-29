@@ -36,23 +36,38 @@ void print_line(const vector<string>& line) {
     cout << endl;
 }
 
-void generate_all_rotations(vector<string>& line) {
+void generate_all_rotations(vector<string>& line, vector<vector<string>>& permutations) {
     vector<string>::size_type no_rotations = 0;
+
+    // Insert the initial string
+    permutations.push_back(line);
 
     while (no_rotations < line.size()-1) {
         std::rotate(line.begin(), line.begin()+1, line.end());
-        print_line(line);
+        //print_line(line);
+        permutations.push_back(line);
         ++no_rotations;
     }
 }
 
 
 int main() {
+    vector<vector<string>> permutations;
     vector<string> line;
 
     read_line(cin, line);
 
-    generate_all_rotations(line);
+    generate_all_rotations(line, permutations);
+
+    std::sort(permutations.begin(), permutations.end());
+
+    // Just for debugging
+    cout << "===========================" << endl;
+    auto iter = permutations.begin();
+    while (iter != permutations.end()) {
+        print_line(*iter);
+        ++iter;
+    }
     
     return 0;
 }
