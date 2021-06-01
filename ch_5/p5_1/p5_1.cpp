@@ -74,6 +74,8 @@ int get_total_chars(const vector<string>& s) {
     auto iter = s.begin();
     while (iter != s.end()) {
         total_chars += iter->length();
+        // for space between words
+        total_chars++;
         ++iter;
     }
 
@@ -86,6 +88,8 @@ int get_total_chars_in_interval(const vector<string>& s, int limit) {
     auto iter = s.begin();
     while (iter != (s.begin() + limit)) {
         total_chars += iter->length();
+        // for space between words
+        total_chars++;
         ++iter;
     }
 
@@ -97,9 +101,14 @@ void format_output(vector<line_t>& permutations) {
 
     while (iter != permutations.end()) {
         vector<string> original = rotate_back(*iter);
-        int no_tabs = get_total_chars(iter->line);
         int limit_chars = get_total_chars_in_interval(original, iter->no_rotations);
-        cout << no_tabs << limit_chars << endl;
+        int no_tabs = get_total_chars(iter->line) - limit_chars;
+        
+        // generate the border for each line
+        string border(no_tabs, ' ');
+        original.insert(original.begin(), border);
+        print_line(original);
+        
         ++iter;
     }
 
@@ -129,7 +138,7 @@ int main() {
     // TODO: reimplement this
     //std::sort(permutations.begin(), permutations.end());
 
-    display_permuted_index(permutations);
+    //display_permuted_index(permutations);
 
     format_output(permutations);
 
