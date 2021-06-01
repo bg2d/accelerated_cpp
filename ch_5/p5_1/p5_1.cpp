@@ -107,7 +107,7 @@ void format_output(vector<line_t>& permutations) {
         // generate the border for each line
         string border(no_tabs, ' ');
         original.insert(original.begin(), border);
-        print_line(original);
+        iter->line = original;
         
         ++iter;
     }
@@ -119,8 +119,6 @@ void display_permuted_index(vector<line_t>& permutations) {
     auto iter = permutations.begin();
     while (iter != permutations.end()) {
         print_line(iter->line);
-        cout << iter->no_rotations << endl;
-
         ++iter;
     }
     cout << "===========================" << endl;
@@ -140,9 +138,9 @@ int main() {
 
     std::sort(permutations.begin(), permutations.end(), compare);
 
-    //display_permuted_index(permutations);
-
     format_output(permutations);
+
+    display_permuted_index(permutations);
 
     return 0;
 }
