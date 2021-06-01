@@ -60,6 +60,18 @@ void generate_all_rotations(vector<string>& line, vector<line_t>& permutations) 
     }
 }
 
+vector<string> rotate_back(const line_t& l) {
+    line_t local_line = l;
+
+    std::rotate(local_line.line.begin(),  local_line.line.end() - local_line.no_rotations, local_line.line.end());
+
+    return local_line.line;
+}
+
+void format_output(vector<line_t>& permutations) {
+
+}
+
 void display_permuted_index(vector<line_t>& permutations) {
     cout << "===========================" << endl;
     auto iter = permutations.begin();
@@ -85,6 +97,6 @@ int main() {
     //std::sort(permutations.begin(), permutations.end());
 
     display_permuted_index(permutations);
-    
+
     return 0;
 }
