@@ -68,7 +68,40 @@ vector<string> rotate_back(const line_t& l) {
     return local_line.line;
 }
 
+int get_total_chars(const vector<string>& s) {
+    int total_chars = 0;
+
+    auto iter = s.begin();
+    while (iter != s.end()) {
+        total_chars += iter->length();
+        ++iter;
+    }
+
+    return total_chars;
+}
+
+int get_total_chars_in_interval(const vector<string>& s, int limit) {
+    int total_chars = 0;
+
+    auto iter = s.begin();
+    while (iter != (s.begin() + limit)) {
+        total_chars += iter->length();
+        ++iter;
+    }
+
+    return total_chars;
+}
+
 void format_output(vector<line_t>& permutations) {
+    auto iter = permutations.begin();
+
+    while (iter != permutations.end()) {
+        vector<string> original = rotate_back(*iter);
+        int no_tabs = get_total_chars(iter->line);
+        int limit_chars = get_total_chars_in_interval(original, iter->no_rotations);
+        cout << no_tabs << limit_chars << endl;
+        ++iter;
+    }
 
 }
 
@@ -97,6 +130,8 @@ int main() {
     //std::sort(permutations.begin(), permutations.end());
 
     display_permuted_index(permutations);
+
+    format_output(permutations);
 
     return 0;
 }
