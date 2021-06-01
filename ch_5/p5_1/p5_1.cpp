@@ -126,6 +126,9 @@ void display_permuted_index(vector<line_t>& permutations) {
     cout << "===========================" << endl;
 }
 
+bool compare(const line_t& l1, const line_t& l2) {
+    return l1.line < l2.line;
+}
 
 int main() {
     vector<line_t> permutations;
@@ -135,8 +138,7 @@ int main() {
 
     generate_all_rotations(line, permutations);
 
-    // TODO: reimplement this
-    //std::sort(permutations.begin(), permutations.end());
+    std::sort(permutations.begin(), permutations.end(), compare);
 
     //display_permuted_index(permutations);
 
