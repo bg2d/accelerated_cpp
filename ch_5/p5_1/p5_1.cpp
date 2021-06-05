@@ -128,13 +128,52 @@ bool compare(const line_t& l1, const line_t& l2) {
     return l1.line < l2.line;
 }
 
+vector<string> split(const string& s) {
+    vector<string> ret;
+    typedef string::size_type string_size;
+    string_size i = 0;
+
+    while (i != s.size()) {
+        while (i != s.size() && isspace(s[i])) {
+            i++;
+        }
+
+        string_size j = i;
+        while (j != s.size() && !isspace(s[j])) {
+            j++;
+        }
+
+        if (i != j) {
+            ret.push_back(s.substr(i, j - i));
+            i = j;
+        }
+    }
+
+    return ret;
+}
+
+void get_input(vector<vector<string>>& w) {
+    string s;
+
+    while (getline(cin, s)) {
+        vector<string> v = split(s);
+        w.push_back(v);
+    }
+
+    return;
+}
+
 int main() {
     vector<line_t> permutations;
-    vector<string> line;
+    vector<vector<string>> lines;
 
-    read_line(cin, line);
+    get_input(lines);
 
-    generate_all_rotations(line, permutations);
+    auto iter = lines.begin();
+    while (iter != lines.end()) {
+       generate_all_rotations(*iter, permutations);
+        ++iter;
+    }
 
     std::sort(permutations.begin(), permutations.end(), compare);
 
