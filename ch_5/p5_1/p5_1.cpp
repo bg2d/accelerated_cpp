@@ -82,6 +82,18 @@ int get_total_chars(const vector<string>& s) {
     return total_chars;
 }
 
+int get_total_chars_of_lines(const vector<vector<string>>& l) {
+    int total_chars = 0;
+
+    auto iter = l.begin();
+    while (iter != l.end()) {
+        total_chars += get_total_chars(*iter);
+        ++iter;
+    }
+
+    return total_chars;
+}
+
 int get_total_chars_in_interval(const vector<string>& s, int limit) {
     int total_chars = 0;
 
@@ -96,13 +108,14 @@ int get_total_chars_in_interval(const vector<string>& s, int limit) {
     return total_chars;
 }
 
-void format_output(vector<line_t>& permutations) {
+void format_output(vector<line_t>& permutations, int total_chars_in_lines) {
     auto iter = permutations.begin();
 
     while (iter != permutations.end()) {
         vector<string> original = rotate_back(*iter);
         int limit_chars = get_total_chars_in_interval(original, iter->no_rotations);
-        int no_tabs = get_total_chars(iter->line) - limit_chars;
+        //int no_tabs = get_total_chars(iter->line) - limit_chars;
+        int no_tabs = total_chars_in_lines - limit_chars;
         
         // generate the border for each line
         string border(no_tabs, ' ');
@@ -111,7 +124,6 @@ void format_output(vector<line_t>& permutations) {
         
         ++iter;
     }
-
 }
 
 void display_permuted_index(vector<line_t>& permutations) {
@@ -177,7 +189,7 @@ int main() {
 
     std::sort(permutations.begin(), permutations.end(), compare);
 
-    format_output(permutations);
+    format_output(permutations, get_total_chars_of_lines(lines));
 
     display_permuted_index(permutations);
 
