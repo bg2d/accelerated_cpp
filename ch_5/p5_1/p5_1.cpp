@@ -16,6 +16,8 @@ typedef struct {
     int no_rotations;
 } line_t;
 
+typedef enum {UPPER, LOWER} case_t;
+
 istream& read_line(istream& is, vector<string>& line) {
     if (is) {
         line.clear();
@@ -136,8 +138,28 @@ void display_permuted_index(vector<line_t>& permutations) {
     cout << "===========================" << endl;
 }
 
+vector<string> change_line_case(const line_t& l, case_t c) {
+    vector<string> ret = l.line;
+
+    auto iter = ret.begin();
+    while (iter != ret.end()) {
+        if (UPPER == c) {
+            transform(iter->begin(), iter->end(), iter->begin(), ::toupper);
+        } 
+        else if (LOWER == c) {
+            transform(iter->begin(), iter->end(), iter->begin(), ::tolower);
+        }
+        ++iter;
+    }
+
+    return ret;
+}
+
 bool compare(const line_t& l1, const line_t& l2) {
-    return l1.line < l2.line;
+    vector<string> lower_1 = change_line_case(l1, LOWER);
+    vector<string> lower_2 = change_line_case(l2, LOWER);
+
+    return lower_1 < lower_2;
 }
 
 vector<string> split(const string& s) {
